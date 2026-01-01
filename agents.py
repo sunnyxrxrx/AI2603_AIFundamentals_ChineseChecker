@@ -213,14 +213,11 @@ class MinimaxPolicy(GreedyPolicy):
         return idx
 
     def _obs_to_game(self, obs):
-        """
-        【核心魔法】将 Observation 逆向重构为 ChineseCheckers 游戏实例
-        """
-        # 1. 创建新游戏 (此时棋盘上有初始位置的棋子)
+        # 1. 创建新游戏 
         game = ChineseCheckers(self.triangle_size)
         
-        # 2. 【关键步骤】拔掉所有棋子！
-        # 我们只保留地形 (EMPTY 和 OUT_OF_BOUNDS)，清除所有玩家 (0 和 3)
+        # 2. 拔掉所有棋子
+        # 只保留地形 清除所有玩家 (0 和 3)
         game.board[game.board == 0] = ChineseCheckers.EMPTY_SPACE
         game.board[game.board == 3] = ChineseCheckers.EMPTY_SPACE
         
@@ -265,13 +262,13 @@ class MinimaxPolicy(GreedyPolicy):
             
             score-= 10* abs(r+2*q)
         if len(p0_indices) > 1:
-            # 1. 计算重心 (Center of Mass)
+            # 1. 计算重心
             qs = [idx[0] - offset for idx in p0_indices]
             rs = [idx[1] - offset for idx in p0_indices]
             avg_q = sum(qs) / len(qs)
             avg_r = sum(rs) / len(rs)
             
-            # 2. 计算离散度 (Variance-like)
+            # 2. 计算离散度
             # 每个棋子到重心的曼哈顿距离之和
             scatter = 0
             for q, r in zip(qs, rs):
@@ -299,8 +296,6 @@ class MinimaxPolicy(GreedyPolicy):
         current_player = 0 if maximizing_player else 3
         
         # 2. 获取合法移动 (递归层只能依赖引擎生成)
-        # 注意：这里的 find_legal_moves 无法生成复杂的连跳，因为缺少历史
-        # 但它能生成所有平移和单跳，这对于预测对手已经足够了
         game.find_legal_moves(current_player)
         legal_moves = game.get_legal_moves(current_player)
         

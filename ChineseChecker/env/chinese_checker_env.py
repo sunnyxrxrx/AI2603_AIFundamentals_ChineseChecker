@@ -176,7 +176,7 @@ class raw_env(AECEnv):
                 if src_pos in source and dst_pos not in source:
                     self.rewards[agent] += 0.1  # 离开我方区域
                 if src_pos not in source and dst_pos in source:
-                    self.rewards[agent] -= 0.3  
+                    self.rewards[agent] -= 0.3  # 进入我方区域
         if self.rewards[agent] != 0:
             #print(f"[ENV] Reward given to {agent}: {self.rewards[agent]}")
             pass
