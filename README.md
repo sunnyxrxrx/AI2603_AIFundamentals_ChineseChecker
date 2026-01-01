@@ -1,5 +1,4 @@
 # AI2603_AIFundamentals_ChineseChecker
-<<<<<<< HEAD
 ## Environment sutup
 You need to run in Linux-based system, gpu is recommended but not necessary.
 
@@ -65,11 +64,4 @@ You can also train a CNN based RL by running
 python mytrain.py --triangle_size xx
 ```
 checkpoints will be save in the form of ``ppo_agent_[iteration]_size_[size].pth``
-=======
 
-train.py是原有的采用全连接神经网络实现的基于PPO的强化学习算法，配套采用的中国跳棋环境是ChineseChecker\env文件夹中'chinese_checker_env_primal'环境。
-
-文件'checkpoint99size2'是采用train.py训练出来的triangle_size为2的RL模型，文件'checkpoint99'是采用train.py训练出来的triangle_size为4的RL模型。
-
-可以在play.py中运行 play.py --use_rl --checkpoint (checkpoint) 进行模型验证。
->>>>>>> 73c0362b6e717e9c1651d4172e8235a77e7a5681
