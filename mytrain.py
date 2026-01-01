@@ -8,6 +8,7 @@ import time
 import os
 from agents import GreedyPolicy
 import random
+import argparse
 
 
 # import debugpy
@@ -107,8 +108,8 @@ class Agent(nn.Module):
         
         return action, probs.log_prob(action), probs.entropy(), self.critic(hidden)
 
-def main():
-    TRIANGLE_SIZE = 4
+def main(args):
+    TRIANGLE_SIZE = args.triangle_size
     TOTAL_TIMESTEPS = 2000000  # 总步数
     LEARNING_RATE = 3e-4
     NUM_STEPS = 2048           # 每次采集多少步 (Batch Size)
@@ -302,9 +303,14 @@ def main():
         
         # 保存模型
         if iter_count % 10 == 0:
-            torch.save(agent.state_dict(), f"ppo_agent_{iter_count}_nomix.pth")
+            torch.save(agent.state_dict(), f"ppo_agent_{iter_count}_size_{args.triangle_size}.pth")
             
         # TODO. 保存优化器 断点续训 比率调优
 
 if __name__ == "__main__":
-    main()
+    parser = argparse.ArgumentParser(
+        prog='RLLib train script'
+    )
+    parser.add_argument('--triangle_size', type=int, required=True)  # 三角区域大小
+    args = parser.parse_args()
+    main(args)

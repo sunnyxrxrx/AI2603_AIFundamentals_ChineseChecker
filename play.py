@@ -40,7 +40,7 @@ def play(args):
         #############################
         # TODO: 导入你的minimax agent
         #############################
-        your_policy = MinimaxPolicy(triangle_size=2)
+        your_policy = MinimaxPolicy(triangle_size=args.triangle_size)
     else:
         # 若你实现了基于强化学习的agent，在此处导入
         # your_policy = load_policy(args.checkpoint)
