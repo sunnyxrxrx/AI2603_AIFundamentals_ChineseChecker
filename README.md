@@ -32,7 +32,7 @@ We provide two RL agents, agent1 is trained on size 2 board, agent2 is trained o
   ```
     Then run 
     ```
-  python play.py --triangle_size 4 --use_rl --checkpoint ppo_agent_99_size_2
+  python play.py --triangle_size 2 --use_rl --checkpoint ppo_agent_99_size_2
   ```
   Where ``ppo_agent_99_size_2`` is our agent.
 - To test agent2, firstly, change line 35 of ``play.py`` into 
