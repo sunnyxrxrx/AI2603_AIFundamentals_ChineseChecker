@@ -10,10 +10,10 @@ pip install -r requirements.txt
 ## Run Minimax
 To test our Minimax agent, you can run the command:
 ```
-python play.py --triangle_size xx [--render_mode human]
+python play.py --triangle_size xx --checkpint 0 [--render_mode human]
 ```
-- triangle size is default to 2
-- For RL opponents, a pretrain model trained on size 2 board is provided, you can import it by changing line 35 into
+- Triangle size is default to 2.
+- For RL opponent, a pretrain model trained on size 2 board is provided, you can import it by changing line 35 into
   ```python
   rl_baseline_policy = load_policy(
         os.path.join(

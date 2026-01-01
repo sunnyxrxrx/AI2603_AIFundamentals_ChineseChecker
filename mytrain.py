@@ -3,7 +3,7 @@ import torch.nn as nn
 import torch.optim as optim
 import numpy as np
 from torch.distributions.categorical import Categorical
-from ChineseChecker import chinese_checker_v0
+from ChineseChecker import chinese_checker_v1
 import time
 import os
 from agents import GreedyPolicy
@@ -125,7 +125,7 @@ def main(args):
     # 初始化贪心陪练
     greedy_policy = GreedyPolicy(TRIANGLE_SIZE)
     # 初始化环境
-    env = chinese_checker_v0.env(triangle_size=TRIANGLE_SIZE, render_mode=None)
+    env = chinese_checker_v1.env(triangle_size=TRIANGLE_SIZE, render_mode=None)
     env.reset()
     # 初始化 Agent
     agent = Agent(env,triangle_size=TRIANGLE_SIZE).to(DEVICE)

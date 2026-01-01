@@ -75,7 +75,7 @@ class raw_env(AECEnv):
         # 观察空间：(棋盘大小)^2 × 4个通道
         self.observation_space_dim = (4 * self.n + 1) * (4 * self.n + 1) * 4
         
-        # 定义每个玩家的动作和观察空间
+        #定义每个玩家的动作和观察空间
         self.action_spaces = {agent: Discrete(self.action_space_dim) for agent in self.agents}
         self.observation_spaces = {
             agent: Dict({
@@ -153,22 +153,33 @@ class raw_env(AECEnv):
             # 非法移动
             self.rewards[agent] = -1000
         else:            
-            # 方向相关的小奖励/惩罚
-            if isinstance(move, Move) and move.direction in [Direction.DownLeft, Direction.DownRight]:
-                self.rewards[agent] = 0.001  # 向下移动有轻微正向奖励
-            if isinstance(move, Move) and move.direction in [Direction.UpLeft, Direction.UpRight]:
-                self.rewards[agent] = -0.001  # 向上移动有轻微负向奖励
             
+            if isinstance(move, Move) and move.direction in [Direction.DownLeft, Direction.DownRight]: 
+                self.rewards[agent] = 0.001 # 向下移动有轻微正向奖励 
+            if isinstance(move, Move) and move.direction in [Direction.UpLeft, Direction.UpRight]: 
+                self.rewards[agent] = -0.005 # 向上移动有轻微负向奖励
+                
             # 目标区域进出奖励
+            if move and move == Move.END_TURN:
+                #print("[debug]: is end turn!")
+                pass
             if move and move != Move.END_TURN:
+                #print("[debug]: not end")
                 src_pos = move.position
                 dst_pos = move.moved_position()
                 target = [Position(q, r) for q, r, s in self.game.get_target_coordinates(player)]
+                source = [Position(-q, -r) for q, r, s in self.game.get_target_coordinates(player)]
                 if src_pos not in target and dst_pos in target:
                     self.rewards[agent] += 0.1  # 进入目标区域
                 if src_pos in target and dst_pos not in target:
-                    self.rewards[agent] -= 0.1  # 离开目标区域
-
+                    self.rewards[agent] -= 0.3  # 离开目标区域
+                if src_pos in source and dst_pos not in source:
+                    self.rewards[agent] += 0.1  # 离开我方区域
+                if src_pos not in source and dst_pos in source:
+                    self.rewards[agent] -= 0.3  # 进入我方区域
+        if self.rewards[agent] != 0:
+            #print(f"[ENV] Reward given to {agent}: {self.rewards[agent]}")
+            pass
         self._accumulate_rewards()  # 累积奖励
         self._clear_rewards()       # 清除当前奖励
 
