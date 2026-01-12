@@ -1,4 +1,11 @@
 # AI2603_AIFundamentals_ChineseChecker
+This is the implementation of Chinese Checkers AI Agent (SJTU AI2603 2025Fall Final Project). 
+We explore two AI approaches for Chinese Checkers:
+- Minimax with Alpha-Beta Pruning
+- Reinforcement Learning with PPO
+
+Both implemented agents show robust performance against Greedy and baseline RL policies.
+
 ## Environment sutup
 You need to run in Linux-based system, gpu is recommended but not necessary.
 
@@ -13,7 +20,7 @@ To test our Minimax agent, you can run the command:
 python play.py --triangle_size xx --checkpint 0 [--render_mode human]
 ```
 - Triangle size is default to 2.
-- For RL opponent, a pretrain model trained on size 2 board is provided, you can import it by changing line 35 into
+- For RL opponent, a pretrain model trained on size 2 board is provided. You can import it by changing line 35 into
   ```python
   rl_baseline_policy = load_policy(
         os.path.join(
@@ -25,8 +32,8 @@ python play.py --triangle_size xx --checkpint 0 [--render_mode human]
 - Render mode is optional.
 
 ## Run RL
-We provide two RL agents, agent1 is trained on size 2 board, agent2 is trained on size 4 board.
-- To test agent1, firstly, change line 47 of ``play.py`` into 
+We provide two RL agents, *agent1* is trained on size 2 board, *agent2* is trained on size 4 board.
+- To test *agent1*, firstly, change line 47 of ``play.py`` into 
   ```python
   your_policy = load_policy(args.checkpoint)
   ```
@@ -35,7 +42,7 @@ We provide two RL agents, agent1 is trained on size 2 board, agent2 is trained o
   python play.py --triangle_size 2 --use_rl --checkpoint ppo_agent_99_size_2
   ```
   Where ``ppo_agent_99_size_2`` is our agent.
-- To test agent2, firstly, change line 35 of ``play.py`` into 
+- To test *agent2*, firstly, change line 35 of ``play.py`` into 
   ```python
     rl_baseline_policy = load_policy(
           os.path.join(
@@ -53,15 +60,15 @@ We provide two RL agents, agent1 is trained on size 2 board, agent2 is trained o
   Where ``ppo_agent_460_size_4.pth`` is our agent.
 
 ## Train RL
-You can chosse to train MLP based RL by running
-```
-python train.py --triangle_size xx
-```
-checkpoints will be saved in ``logs/``
+- You can choose to train MLP based RL by running
+  ```
+  python train.py --triangle_size xx
+  ```
+  checkpoints will be saved in ``logs/``
 
-You can also train a CNN based RL by running
-```
-python mytrain.py --triangle_size xx
-```
-checkpoints will be save in the form of ``ppo_agent_[iteration]_size_[size].pth``
+- You can also train a CNN based RL by running
+  ```
+  python mytrain.py --triangle_size xx
+  ```
+  checkpoints will be save in the form of ``ppo_agent_[iteration]_size_[size].pth``
 
